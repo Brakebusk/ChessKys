@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChessKys library</title>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="./favicon.png">
+	<style>
+		#moveName {
+			font-weight: bold;
+			width: 90%;
+			padding-bottom: 5px;
+			font-size: 1.3em;
+		}
+		#chessBoard {
+			background: white;
+			padding: 0;
+			border: none;
+			text-align: center;
+		}
+		#chessBoard tr {
+			vertical-align: middle;
+		}
+		.img_wrap {
+			position: absolute;
+			width: 26px;
+			height: 26px;
+			border: none;
+		}
+		.img_wrap>img {
+			border: none;
+			display: none;
+		}
+		#leftPanel, #rightPanel {
+			display: table-cell;
+		}
+		#leftPanel {
+			width: 600px;
+		}
+		#rightPanel {
+			padding-left: 20px;
+			border-left: 1px solid #a5a5a5;
+		}
+		#board-caption {
+			width: 300px;
+		}
+		#navigation {
+			margin-top: 10px;
+			margin-bottom: 30px;
+			margin-left: 20px;
+		}
+		body {
+			padding: 20px;
+			font-family: Cambria;
+		}
+		#contentContainer {
+			margin-left: 20px;
+			display: inline-block;
+		}
+		#moveMovesContainer {
+			padding-top: 10px;
+		}
+		#moveTitle {
+			border-bottom: 1px solid #3c3c3c;
+			font-size: 2.2em;
+			margin: 0;
+			margin-bottom: 15px;
+			padding-bottom: 2px;
+		}
+		#moveInformation {
+			margin-top: 15px;
+		}
+		.informationThingContainer {
+			margin-bottom: 10px;
+		}
+		.informationThingTitle {
+			color: #505050;
+		}
+		.informationThingContent {
+			font-weight: bold;
+		}
+		#mainArticle {
+			width: 90%;
+		}
+	</style>
+</head>
+<body onload="checkQuery();">
+	<img src="./logo.png">
+	<div id="navigation">
+		<button onclick="randomMove();">Random move set</button> <button onclick="previousMove();">Previous</button> <button onclick="nextMove();">Next</button>
+	</div>
+	<div id="contentContainer">
+		<p id="moveTitle"></p>
+		<div id="leftPanel">
+			<div id="mainArticle"></div>
+		</div>
+		<div id="rightPanel">
+			<div id="move">
+				<div id="moveName"></div>
+				<div id="chessboardContainer">
+				<table id="chessBoard" cellspacing="0" cellpadding="0">
+				<tr style="vertical-align:middle">
+					<td style="vertical-align:inherit;padding:0"></td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">a</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">b</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">c</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">d</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">e</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">f</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">g</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">h</td>
+					<td style="vertical-align:inherit;padding:0"></td>
+				</tr>
+				<tr>
+					<td style="padding:0;vertical-align:inherit;width:18px;height:26px">8</td>
+					<td colspan="8" rowspan="8" style="padding:0;vertical-align:inherit;position: relative;">
+						<img src="./chessboard.png" width="208" height="208">
+						
+						<div class="img_wrap" style="top: 0px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g8">
+						</div>
+						<div class="img_wrap" style="top: 0px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h8">
+						</div>
+						
+						<div class="img_wrap" style="top: 26px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g7">
+						</div>
+						<div class="img_wrap" style="top: 26px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h7">
+						</div>
+						
+						<div class="img_wrap" style="top: 52px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g6">
+						</div>
+						<div class="img_wrap" style="top: 52px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h6">
+						</div>
+						
+						<div class="img_wrap" style="top: 78px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g5">
+						</div>
+						<div class="img_wrap" style="top: 78px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h5">
+						</div>
+						
+						<div class="img_wrap" style="top: 104px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g4">
+						</div>
+						<div class="img_wrap" style="top: 104px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h4">
+						</div>
+						
+						<div class="img_wrap" style="top: 130px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g3">
+						</div>
+						<div class="img_wrap" style="top: 130px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h3">
+						</div>
+						
+						<div class="img_wrap" style="top: 156px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g2">
+						</div>
+						<div class="img_wrap" style="top: 156px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h2">
+						</div>
+						
+						<div class="img_wrap" style="top: 182px;left: 0px;">
+							<img src="" width="26" height="26" id="field_a1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 26px;">
+							<img src="" width="26" height="26" id="field_b1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 52px;">
+							<img src="" width="26" height="26" id="field_c1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 78px;">
+							<img src="" width="26" height="26" id="field_d1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 104px;">
+							<img src="" width="26" height="26" id="field_e1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 130px;">
+							<img src="" width="26" height="26" id="field_f1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 156px;">
+							<img src="" width="26" height="26" id="field_g1">
+						</div>
+						<div class="img_wrap" style="top: 182px;left: 182px;">
+							<img src="" width="26" height="26" id="field_h1">
+						</div>
+					</td>
+					<td style="padding:0;vertical-align:inherit;width:18px;height:26px">8</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">7</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">7</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">6</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">6</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">5</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">5</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">4</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">4</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">3</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">3</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">2</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">2</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="padding:0;vertical-align:inherit;height:26px">1</td>
+					<td style="padding:0;vertical-align:inherit;height:26px">1</td>
+				</tr>
+				<tr style="vertical-align:middle">
+					<td style="vertical-align:inherit;padding:0"></td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">a</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">b</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">c</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">d</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">e</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">f</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">g</td>
+					<td style="padding:0;vertical-align:inherit;height:18px;width:26px">h</td>
+					<td style="vertical-align:inherit;padding:0"></td>
+				</tr>
+			</table>
+					<div id="board-caption"></div>
+				</div>
+				<div id="moveMovesContainer">
+					Moves:
+					<div id="moveMoves"></div>
+				</div>
+				<div id="moveInformation"></div>
+			</div>
+		</div>
+	</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/seedrandom/2.4.0/seedrandom.min.js"></script>
+<script>
+	//order: potential Head -> noun -> potentialPiece -> tail
+	var potentialHead = ["Old ", "New ", "Semi-", "Modern ", "Classical ", "Neo-"], //make x% chance of being triggered
+	noun = ['Norwegian', 'Swedish', 'Danish', 'Scandinavian', 'Fennoscandian', 'British', 'Roman', 'French', 'Paris', 'Villepinte', 'Châtillon', 'Forbach', 'Hazebrouck', 'German', 'Mülheim', 'Nuremberg', 'Munich', 'Berlin', 'Dutch', 'Swiss', 'Vienna', 'American', 'Washington', 'Canadian', 'Montreal', 'Armenian', 'Icelandic', 'Reykjavik', 'Eyjafjallajökull', 'Polish', 'Persian', 'Babylonian', 'Baghdad', 'Arabian', 'Beirut', 'Manaman', 'Palestinian', 'Iraqi', 'Russian', 'Cheremkhovian', 'Donetskian', 'Klimovskian', 'Krymskian', 'Belebeian', 'Dmitrovnian', 'Siberian', 'Volskayan', 'Alexandrovnik', 'Macedonian', 'Spanish', 'Portuguese', 'Italian', 'Sicilian', 'Sunchon', 'Sariwon', 'Kaechon', 'Pyongyang', 'Japanese', 'Nagasaki', 'Hiroshima', 'Yūbari', 'Ashibetsu', 'Sunagawa', 'Minamatan', 'Wakkanai', 'Takahashi', 'Chinese', 'Lijiang', 'Shanghai', 'Romulan', 'Klingon', 'Courtesan', 'Clockwork', 'Azeroth', 'Westworld', 'Cartesian', 'Communist', 'Bolshevik', 'Charlemagne', 'Charkovsky', 'Hitler', 'Nazi', 'Patrician', 'Transgressional', 'Westeros', 'Retarded', 'Brexit', 'Lurenzwitz', 'Weeaboo', 'Scotch', 'Brandy', 'Whisky', 'Low-Budget', 'Basilican', 'Metallurgic', 'Plebian', 'Hindenburg', 'Svalbard', 'Progressive', 'Keynesian', 'Kolomogrov'],
+	potentialPiece = [" Queen's", " Pawn", " Knight's", " Rook's", " King's", " Bishop's"], //make x% chance of being triggered
+	tail = [" Defence", " Opening", " Gambit", " Game", " Attack", " Gambit Declined", " Gambit Accepted", " Offensive", " Ambush", " Variation", " Line", " Standoff", " Mate"],
+	wackyTail = [" Constipation", " Massacre", " Joke", " Rape", " Blunder", " Accident", " Regret", " Death...", " Coallition", " Tregedy", " Comedy", " Monkey Business", " Brawl", " Puzzle", " Nut", " Enigma"],
+	pieceNames = ["", "bq", "bp", "bn", "br", "bb", "bk", "wq", "wp", "wn", "wr", "wb", "wk"],
+	index = "",
+	doRandom = true;
+	
+	function checkQuery() {
+		if (getParameterByName("index") !== null) {
+			index = convert36to13(getParameterByName("index"));
+			if (index.length < 64) {
+				var indexLengthBuffer = index.length;
+				for (i = 0; i < (64 - indexLengthBuffer); i++) {
+					index = "0" + index;
+				}
+			}
+			Math.seedrandom(index);
+			doRandom = false;
+			generateMove();
+		} else {
+			randomMove();
+		}
+	}
+	function convert36to13(str){
+		var dec = str.toString().split(''), sum = [], hex = [], i, s;
+		while(dec.length){
+			s = 1 * parseInt(dec.shift(), 36);
+			for(i = 0; s || i < sum.length; i++){
+				s += (sum[i] || 0) * 36;
+				sum[i] = s % 13;
+				s = (s - sum[i]) / 13;
+			}
+		}
+		while(sum.length){
+			hex.push(sum.pop().toString(13));
+		}
+		return hex.join('');
+	}
+	function convert13to36(str){
+		var dec = str.toString().split(''), sum = [], hex = [], i, s;
+		while(dec.length){
+			s = 1 * parseInt(dec.shift(), 13);
+			for(i = 0; s || i < sum.length; i++){
+				s += (sum[i] || 0) * 13;
+				sum[i] = s % 36;
+				s = (s - sum[i]) / 36;
+			}
+		}
+		while(sum.length){
+			hex.push(sum.pop().toString(36));
+		}
+		return hex.join('');
+	}
+	function nextMove() {
+		for (i = 63; i > -1; i--) {
+			var selectedDigit = parseInt(index.substring(i, i + 1), 13) + 1;
+			if (selectedDigit < 13) {
+				index = index.replaceAt(i, selectedDigit.toString(13));
+				for (j = i + 1; j < 64; j++) {
+					index = index.replaceAt(j, "0");
+				}
+				break;
+			}
+		}
+		if (history.pushState) {
+			var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?index=" + convert13to36(index);
+			window.history.pushState({path:newurl},'',newurl);
+		}
+		Math.seedrandom(index);
+		generateMove();
+	}
+	function previousMove() {
+		if (doRandom) {
+			alert("Hmm.. This button seems to be broken..");
+		} else {
+			var lastDigit = parseInt(index.substring(63, 64), 13) - 1;
+			if (lastDigit > -1) {
+				index = index.replaceAt(63, lastDigit.toString(13));
+			} else {
+				var place = 62;
+				for (i = place; i > -1; i--) {
+					if (parseInt(index.substring(i, i + 1), 13) > 0) {
+						index = index.replaceAt(i, (parseInt(index.substring(i, i + 1), 13) - 1).toString(13));
+						place = i;
+						break;
+					}
+				}
+				place += 1;
+				for (i = place; i < 64; i++) {
+					index = index.replaceAt(i, "c");
+				}
+			}
+			if (history.pushState) {
+				var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?index=" + convert13to36(index);
+				window.history.pushState({path:newurl},'',newurl);
+			}
+			Math.seedrandom(index);
+			generateMove();	
+		}
+	}
+	function randomMove() {
+		doRandom = false;
+		index = "";
+		for (i = 0; i < 64; i++) {
+			var potentialDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c"];
+			index += String(potentialDigits[randInt(0, 12)]);
+		}
+		generateRandomBoard();
+		index = boardToHash();
+		if (history.pushState) {
+			var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?index=" + convert13to36(index);
+			window.history.pushState({path:newurl},'',newurl);
+		}
+		Math.seedrandom(index);
+		generateMove();
+	}
+	function generateMove() {
+		//Math.floor(Math.random() * 6) -> 0-5 
+		var output = "";
+		var firstPiece = null;
+		if (Math.floor(Math.random() * 2) === 0) {
+			output += potentialHead[Math.floor(Math.random() * potentialHead.length)];
+		} else if (Math.floor(Math.random() * 25) === 0) {
+			//trole-heads
+			var wackyHeads = ["Demi-", "Pseudo-", "Mega-", "Quantum-", "Illegal ", "Giga-", "Fucking ", "Ultra-"];
+			output += wackyHeads[Math.floor(Math.random() * wackyHeads.length)];
+		}
+		
+		output += noun[Math.floor(Math.random() * noun.length)];
+		if (Math.floor(Math.random() * 2) === 0) {
+			var pieceIndex = Math.floor(Math.random() * potentialPiece.length);
+			output += potentialPiece[pieceIndex];
+			firstPiece = pieceIndex;			
+		}
+		
+		if (Math.floor(Math.random() * 150) === 0) {
+			output += wackyTail[Math.floor(Math.random() * wackyTail.length)];
+		} else {
+			output += tail[Math.floor(Math.random() * tail.length)];	
+		}
+		document.getElementById("moveName").textContent = output;
+		document.getElementById("moveTitle").textContent = output;
+		
+		var captions = ["Typical situation for the <b>{move}</b>.", "&quot;Using the <b>{move}</b>, the player will certainly have the upper hand.&quot;", "The <b>{move}</b> will typically increase the player's chance of winning by {RANDINT}%.",
+						"As demonstrated on the board, the <b>{move}</b> secured {RANDCOLOR}'s victory."];
+		var captionContainer = document.getElementById("board-caption");
+		var captionString = captions[Math.floor(Math.random() * captions.length)];
+		captionString = captionString.replace("{move}", document.getElementById("moveName").textContent);
+		captionString = captionString.replace("{RANDINT}", String(Math.floor(Math.random() * 99) + 1));
+		var randColor = "";
+		if (Math.floor(Math.random() * 2) === 0) {
+			randColor = "White";
+		} else {
+			randColor = "Black";
+		}
+		captionString = captionString.replace("{RANDCOLOR}", randColor);
+		//captionString = captionString.replace();
+		captionContainer.innerHTML = captionString;
+		
+		
+		document.getElementById("moveMoves").innerHTML = generateMoveMoves(firstPiece);
+		if (doRandom) {
+			generateRandomBoard();
+		} else {
+			generateBoard();	
+		}
+		
+		var informationPanel = document.getElementById("moveInformation");
+		informationPanel.innerHTML = "";
+		var firstNames = ["Nikita", "Dima", "Alex", "Sergey", "Alexander", "Andrey", "Vlad", "Sasha", "Artem", "Ivan", "Anton", "Dmitry", "Max", "Kirill", "Maxim", "Egor", "Andrew",
+					 "Roman", "Oleg", "Pavel", "Ilya", "Denis", "Ruslan", "Alexandr", "Igor", "Vladislav", "Vladimir", "Alexey", "Danil", "Vadim", "Kostya", "Gleb", "Daniel",
+					 "Zhenya", "Nick", "Slava", "Daniil", "Yaroslav", "Mark", "Konstantin", "Pasha", "Andrei ", "Mikhail", "Timur", "Arthur", "Misha", "Kolya", "Anatoly", "Bogdan",
+					 "Dmitriy", "Fedor", "Mansur", "Roma", "Sergei", "Danila", "Matvey", "Rafit", "Boris", "Dan", "Leo", "Paul", "Artyom", "Valentin", "Zahar", "George", "Aleksei",
+					 "Arseniy", "Michael", "Vitaliy", "Serge", "Grisha", "Eugene", "Vova", "Aleksandr", "Leonid", "Stanislav", "Evgeny", "Aymeric", "Aleksey", "Adam", "Renat",
+					 "Yegor", "David", "Nikolai", "Yura", "Nikolay", "Andru", "Artiom", "Sonya", "Bekhan", "Gosha", "Arsenii", "Petr", "German", "Maksim", "Niko", "Artur", "Vasiliy", "Gregory"];
+		
+		var lastNames = ["Müller", "Schmidt", "Schneider", "Fischer", "Weber", "Schäfer", "Meyer", "Wagner", "Becker", "Bauer", "Hoffmann", "Schulz", "Koch", "Richter", "Klein",
+						 "Wolf", "Schröder", "Neumann", "Braun", "Werner", "Schwarz", "Hofmann", "Zimmermann", "Schmitt", "Hartmann", "Schmid", "Weiß", "Schmitz", "Krüger",
+						 "Lange", "Meier", "Walter", "Köhler", "Maier", "Beck", "König", "Krause", "Schulze", "Huber", "Mayer", "Frank", "Lehmann", "Kaiser", "Fuchs", "Herrmann",
+						 "Lang", "Thomas", "Peters", "Stein", "Jung", "Möller", "Berger", "Martin", "Friedrich", "Scholz", "Keller", "Groß", "Hahn", "Roth", "Günther", "Vogel",
+						 "Schubert", "Winkler", "Schuster", "Jäger", "Lorenz", "Ludwig", "Baumann", "Heinrich", "Otto", "Simon", "Graf", "Kraus", "Krämer", "Böhm", "Schulte",
+						 "Albrecht", "Franke", "Winter", "Schumacher", "Vogt", "Haas", "Sommer", "Schreiber", "Engel", "Ziegler", "Dietrich", "Brandt", "Seidel", "Kuhn", "Busch",
+						 "Horn", "Arnold", "Kühn", "Bergmann", "Pohl", "Pfeiffer", "Wolff", "Voigt", "Sauer"];
+		
+		var nick = ["Cunning", "Chess Machine", "King of Chess", "Prince of Chess", "Iron Tiger", "Swindler", "Magician", "Black Mamba", "Black Death", "Jackass", "Psychological King", "Russian Stallion", "Impaler",
+					"Artist", "Butcher", "Cheater", "Brutal", "Quick", "Fox", "Elegant"];
+		var wackyNick = ["Psychopath", "Mass Murderer", "Hitler of his Generation", "Retarded", "Boyo"];
+		var nickOutput = "";
+		if (Math.floor(Math.random() * 40) === 0) {
+			nickOutput = wackyNick[randInt(0, wackyNick.length - 1)];
+		} else {
+			nickOutput = nick[randInt(0, nick.length - 1)];
+		}
+		informationPanel.appendChild(newInformationThing("Pioneered by:", firstNames[randInt(0, firstNames.length - 1)] + " &quot;The " + nickOutput + "&quot; " + lastNames[randInt(0, lastNames.length - 1)]));
+		
+		var datething= "";
+		if (randInt(0, 30) === 0) {
+			datething = randomDate(new Date(100, 0, 1), new Date(1800, 0, 1)).toLocaleDateString('en-GB') + "AD";
+		} else if (randInt(0, 150) === 0) {
+			datething = randomDate(new Date(2050, 0, 1), new Date(9000, 0, 1)).toLocaleDateString('en-GB');
+		} else {
+			datething = randomDate(new Date(1800, 0, 1), new Date()).toLocaleDateString('en-GB');
+		}
+		informationPanel.appendChild(newInformationThing("First used: ", datething));
+		
+		//generating the aricle
+		generateArticle();
+	}
+	function generateMoveMoves(firstPiece) {
+		var moveString = "";
+		var moveCount = Math.floor(Math.random() * 5) + 2; //2 - 6 moves
+		
+		
+		for (j = 0; j < moveCount; j++) {
+			moveString += String(j + 1) + ". " + randomMoveMove(2, firstPiece) + "<br>";
+			if (j === 0) {
+				firstPiece = null;
+			}
+		}
+		return moveString;
+	}
+	function randomMoveMove(count, firstPiece) {
+		var moveString = "";
+		
+		//chess notation:
+		var pieces = ["Q", "", "N", "R", "K", "B"];
+		var gridLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
+		
+		for (i = 0; i < count; i++) {
+			if (moveString !== "") {
+				moveString += "&nbsp;&nbsp;&nbsp;";
+			}
+			var move = "";
+			if (i == 0 && firstPiece !== null) {
+				move += pieces[firstPiece];
+			} else {
+				if (Math.floor(Math.random() * 300) === 0) {
+					//fake piece
+					var fakePieces = ["Z", "Æ", "∀", "W", "Ø", "Å", "β", "Γ", "Δ", "Ε", "Θ", "Σ", "Φ", "Ω", "♔", "♕", "♖", "♗", "♘", "♙", "♚", "♛", "♜", "♝", "♞", "♟"];
+					move += fakePieces[Math.floor(Math.random() * fakePieces.length)];
+				} else {
+					move += pieces[Math.floor(Math.random() * pieces.length)];
+				}
+			}
+			if (Math.floor(Math.random() * 6) === 0) {
+				if (move === "") {
+					move += "e";
+				}
+				move += "x";
+			}
+			move += gridLetters[Math.floor(Math.random() * gridLetters.length)];
+			move += String(Math.floor(Math.random() * 8) + 1);
+			if (Math.floor(Math.random() * 8) === 0) {
+				move += "+";
+			}
+			if (Math.floor(Math.random() * 40) === 0) {
+				//reaction
+				var reaction = ["!", "?", "¿", "‽", "!!", "??", "!?", "?!", "=", "∞"];
+				move += reaction[Math.floor(Math.random() * reaction.length)];
+			}
+			moveString += move;
+		}
+		
+		return moveString;
+	}
+	function generateBoard() {
+		var gridLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
+		var fieldSequence = ['54', '51', '42', '3', '11', '24', '48', '21', '20', '7', '9', '17',
+							 '62', '10', '27', '37', '59', '56', '39', '4', '32', '46', '0', '19', '55',
+							 '43', '8', '35', '29', '40', '38', '28', '45', '33', '50', '61', '14', '57',
+							 '36', '34', '52', '49', '47', '22', '60', '1', '25', '41', '13', '58', '12',
+							 '44', '6', '31', '53', '23', '26', '63', '16', '30', '2', '5', '15', '18'];
+		
+		var fields = document.getElementsByClassName("img_wrap");
+		for (i = 0; i < fields.length; i++) {
+			var img = fields[i].getElementsByTagName("img")[0];
+			img.style.display = "";
+			
+			var pieceIndex = parseInt(index.substring(i, i + 1), 13);
+			var selectedPiece = pieceNames[pieceIndex];
+			if (selectedPiece !== "") {
+				img.src = "./Chess_" + selectedPiece + ".png";
+				img.style.display = "block";
+			} else {
+				img.src = "";
+			}
+		}
+	}
+	function boardToHash() {
+		var output = "";
+		var fields = document.getElementById("chessBoard").getElementsByClassName("img_wrap");
+		for (l = 0; l < fields.length; l++) {
+			var img = fields[l].getElementsByTagName("img")[0];
+			if (img.getAttribute("src") === "") {
+				output += "0";
+			} else {
+				output += pieceNames.indexOf(img.getAttribute("src").split("_")[1].split(".")[0]).toString(13);
+			}
+		}
+		return output;
+	}
+	function generateRandomBoard() {
+		var gridLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
+		var pieceNames = ["q", "p", "n", "r", "b", "k", "p"];
+		
+		var fields = document.getElementsByClassName("img_wrap");
+		for (i = 0; i < fields.length; i++) {
+			var img = fields[i].getElementsByTagName("img")[0];
+			img.style.display = "";
+			img.src = "";
+		}
+		
+		var pieceCount = Math.floor(Math.random() * 28) + 2; //total pieces plus Kings = 2-30
+		
+		for (i = 0; i < pieceCount; i++) {
+			var colorBool = Math.floor(Math.random() * 2); //0 = white, 1 = black
+			
+			var color = "";
+			if (colorBool === 0) {
+				color = "w";
+			} else {
+				color = "b";
+			}
+			
+			var selectedPiece = color + pieceNames[Math.floor(Math.random() * pieceNames.length)];
+			var selectedPosition = gridLetters[Math.floor(Math.random() * gridLetters.length)] + String(Math.floor(Math.random() * 8) + 1);
+			
+			var field = document.getElementById("field_" + selectedPosition);
+			field.style.display = "block";
+			field.src = "./Chess_" + selectedPiece + ".png";	
+		}
+	}
+	function newInformationThing(title, content) {
+		var informationThing = document.createElement("div");
+		informationThing.className = "informationThingContainer";
+		var informationTingTitle = document.createElement("span");
+		informationTingTitle.className = "informationThingTitle";
+		informationTingTitle.textContent = title;
+		informationThing.appendChild(informationTingTitle);
+		var informationTingContent = document.createElement("span");
+		informationTingContent.className = "informationThingContent";
+		informationTingContent.innerHTML = " " + content;
+		informationThing.appendChild(informationTingContent);
+		return informationThing;
+	}
+	function randInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	function randomDate(start, end) {
+		return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+	}
+	const capitalize = (string = "") => [...string].map(
+		(char, index) => index ? char : char.toUpperCase() 
+	).join('');
+	function generateArticle() {
+		var articleElement = document.getElementById("mainArticle");
+		var articleOutput = "";
+		var corpus = "";
+		
+		var rawFile = new XMLHttpRequest();
+		rawFile.open("GET", "./chesslingo.txt", true);
+		rawFile.onreadystatechange = function() {
+			if (rawFile.readyState == 4 && rawFile.status == 200) {
+				corpus = rawFile.responseText.replace(".", "");
+				var paragraphCount = randInt(1, 3);
+				for (n = 0; n < paragraphCount; n++) {
+					var sentenceCount = randInt(4, 8);
+					for (i = 0; i < sentenceCount; i++) {
+						articleOutput += generateSentence(corpus);
+					}
+					articleOutput += "<br><br>";
+				}
+				
+				articleElement.innerHTML = articleOutput;
+			}
+		};
+		rawFile.send(null);
+	}
+	function generateSentence(corpus) {
+		var output = "";
+		var sentenceLength = randInt(7, 13); //*2 = word count
+		
+		var words = corpus.split(' ');
+		var wordCount = words.length;
+		
+		var triples = [];
+		
+		for (k = 0; k < wordCount - 3; k++) {
+			triples.push([words[k], words[k + 1], words[k + 2]]);
+		}
+		
+		var seed = randInt(0, triples.length - 1);
+		
+		output = triples[seed][0] + " " + triples[seed][1];
+		for (k = 0; k < sentenceLength; k++) {
+			var matchingList = [];
+			for (l = 0; l < triples.length - 1; l++) {
+				if (triples[l][0] == triples[seed][2]) {
+					matchingList.push(l);
+				}
+			}
+			if (matchingList.length > 0) {
+				seed = matchingList[randInt(0, matchingList.length - 1)];
+				output += " " + triples[seed][0] + " " + triples[seed][1];
+			}
+		}
+		output += ". ";
+		
+		return capitalize(output);
+	}
+	function getParameterByName(name, url) {
+		if (!url) {
+		  url = window.location.href;
+		}
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
+		if (!results) return null;
+		if (!results[2]) return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+	String.prototype.replaceAt=function(index, character) {
+		return this.substr(0, index) + character + this.substr(index+character.length);
+	}
+</script>
+</body>
+</html>

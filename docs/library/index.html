@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ChessKys library</title>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="../favicon.png">
+		<style>
+			.inputContainer {
+				margin: 10px 0;
+			}
+		</style>
+	</head>
+	<body>
+		For each field select a number between 0 and 815730720:
+		<div class="inputContainer">Universe: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Galaxy: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Star System: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Planet: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Latitude: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Longitude: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Altitude: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<div class="inputContainer">Board: <input type="number" min="0" max="815730720" value="0" class="addressInput"></div>
+		<button onclick="randomInput();">Random</button> <button onclick="selectConfiguration();">Select</button>
+		
+		<script>
+			function randomInput() {
+				var input = document.getElementsByClassName('addressInput');
+				for (i = 0; i < input.length; i++) {
+					input[i].value = Math.floor(Math.random() * 815730720);
+				}
+			}
+			function selectConfiguration() {
+				var input = document.getElementsByClassName('addressInput');
+				var toTer = "";
+				for (i = 0; i < input.length; i++) {
+					var terValueString = String(parseInt(input[i].value).toString(13));
+					if (terValueString.length < 8) {
+						var lengthBuffer = terValueString.length;
+						for (j = 0; j < (8 - lengthBuffer); j++) {
+							terValueString = "0" + terValueString;
+						}
+					}
+					toTer += terValueString;
+				}
+				var hash = terTo36(toTer);
+				if (hash === "") {
+					hash = "0";
+				}
+				window.location = "../?index=" + hash;
+			}
+			function terTo36(str){
+				var dec = str.toString().split(''), sum = [], hex = [], i, s;
+				while(dec.length){
+				    s = 1 * parseInt(dec.shift(), 13);
+				    for(i = 0; s || i < sum.length; i++){
+						s += (sum[i] || 0) * 13;
+						sum[i] = s % 36;
+				        s = (s - sum[i]) / 36;
+				    }
+				}
+				while(sum.length){
+				    hex.push(sum.pop().toString(36));
+				}
+				return hex.join('');
+			}
+		</script>
+	</body>
+</html>
