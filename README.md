@@ -1,2 +1,2 @@
-# ChessKyss
+# ChessKys
 The extended chess move library
